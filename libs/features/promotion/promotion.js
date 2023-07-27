@@ -43,37 +43,23 @@ export async function applyPromotions(activePromotions) {
 }
 
 export default async function loadPromotion() {
-  const currentPath = window.location.pathname; // '/drafts/mariia/promopoc/products/indesign'
-  const indexOld = await fetchPromotionIndex();
-  const index = {};
-  index.data = [
-    {
-      path: '/drafts/mariia/promopoc/promotions/blackfriday',
-      promocode: 'blackfridayy',
-      promostart: '1688421759490', // 4 jul
-      promoend: '1789923759490', // 20 sep 2026
-      promopages: '/drafts/mariia/promopoc/products/indesign,https://promopoc--milo--adobecom.hlx.page/drafts/mariia/promopoc/collections/catalog',
-    },
-    {
-      path: '/drafts/mariia/promopoc/promotions/max',
-      promocode: 'max',
-      promostart: '1688421759490',
-      promoend: '1789923759490',
-      promopages: '/edrafts/mariia/promopoc/products/indesign,https://promopoc--milo--adobecom.hlx.page/drafts/mariia/promopoc/collections/catalog',
-    },
-  ];
+  const currentPath = window.location.pathname;
+  const index = await fetchPromotionIndex();
   // for each promotion in index check if current time is between start and end time of promotion
   // if yes, check if current path is in promopages
   const activePromotions = index.data.filter((promotion) => {
     const currentTime = new Date().getTime();
-    // todo check later if dosDateTimeToDate should be used
-    const promoStart = new Date(Number(promotion.promostart)).getTime();
-    const promoEnd = new Date(Number(promotion.promoend)).getTime();
+    const promoStart = Date.parse(promotion.promostart);
+    const promoEnd = Date.parse(promotion.promoend);
     const promoIsOn = currentTime >= promoStart && currentTime <= promoEnd;
-    const pageInPromo = promotion.promopages.split(',').includes(currentPath);
+    const SEPARATOR = ',';
+    const KEYWORD = 'hlx.page';
+    const promoPages = promotion.promopages.split(SEPARATOR).map((url) => {
+      const startIndex = url.indexOf(KEYWORD);
+      return url.substring(startIndex + KEYWORD.length);
+    });
+    const pageInPromo = promoPages.includes(currentPath);
     return promoIsOn && pageInPromo;
   });
-
   applyPromotions(activePromotions);
-  // for each activePromotion
 }
