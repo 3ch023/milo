@@ -122,7 +122,6 @@ const init = (el) => {
     const altCta = rows[rows.length - 1].children?.length === 2
       ? rows[rows.length - 1].children : null;
     const allPElems = row.querySelectorAll('p');
-    // const ctas = !offerSelection ? allPElems[allPElems.length - 1] : createTag('p', { slot: 'footer' });
     const ctas = allPElems[allPElems.length - 1];
 
     images.forEach((img) => {

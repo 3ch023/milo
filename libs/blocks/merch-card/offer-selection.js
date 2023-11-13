@@ -1,7 +1,6 @@
 import { createTag } from '../../utils/utils.js';
 import { decorateButtons } from '../../utils/decorate.js';
 import '../../deps/merch-offers.js';
-import '../../deps/merch-offer.js';
 
 function createDynamicSlots(el, bodySlot) {
   const price = createTag('h5', { style: 'margin-top: 8px; margin-bottom: 16px;' });
@@ -10,19 +9,12 @@ function createDynamicSlots(el, bodySlot) {
 
   const p = createTag('p', { class: 'action-area' });
   p.append(createTag('a', { slot: 'cta', is: 'checkout-link' }));
-  // decorateButtons(p);
   const footer = el.querySelector('div[slot="footer"]');
   footer.append(p);
-  // footer.append(createTag('a', { slot: 'cta', is: 'checkout-link' }));
-  // el.append(footer);
-
-  // el.querySelector('div[slot="footer"] a[is="checkout-link"]')?.setAttribute('slot', 'cta');
   bodySlot.querySelector('p')?.setAttribute('slot', 'description');
 }
 function createMerchOffer(option) {
   const merchOffer = createTag('merch-offer', { text: option.childNodes[0].textContent.trim() });
-  // const overrides = option.querySelector('ul');
-
   [...option.querySelector('ul').children].forEach((li, index) => {
     const override = li.childNodes[0];
     if (override.nodeName === '#text') {
