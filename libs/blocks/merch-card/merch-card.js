@@ -41,8 +41,8 @@ const createAndAppendTag = (tagName, attributes, content, parent) => {
   return newTag;
 };
 
-const parseContent = (el, altCta, cardType, merchCard) => {
-  const innerElements = [...el.querySelectorAll('h1, h2, h3, h4, h5, h6, p, ul')];
+const parseContent = (el, merchCard) => {
+  const innerElements = [...el.querySelectorAll('h1, h2, h3, h4, h5, h6, p')];
   const bodySlot = createTag('div', { slot: 'body-xs' });
 
   innerElements.forEach((element) => {
@@ -117,11 +117,14 @@ const init = (el) => {
     const cardType = getPodType(styles);
     const ribbonMetadata = rows[0].children?.length === 2 ? rows[0].children : null;
     const actionMenuContent = cardType === 'catalog' ? getActionMenuContent(el, ribbonMetadata) : null;
+    const offerSelection = cardType === 'plans' ? el.querySelector('ul') : null;
     const row = getMerchCardRows(rows, ribbonMetadata, cardType, actionMenuContent);
     const altCta = rows[rows.length - 1].children?.length === 2
       ? rows[rows.length - 1].children : null;
     const allPElems = row.querySelectorAll('p');
+    // const ctas = !offerSelection ? allPElems[allPElems.length - 1] : createTag('p', { slot: 'footer' });
     const ctas = allPElems[allPElems.length - 1];
+
     images.forEach((img) => {
       const imgNode = img.querySelector('img');
       const { width, height } = imgNode;
@@ -148,12 +151,14 @@ const init = (el) => {
       merchCard.setAttribute('action-menu', true);
       merchCard.append(createTag('div', { slot: 'action-menu-content' }, actionMenuContent.innerHTML));
     }
-    if (ctas) {
-      const footer = createTag('div', { slot: 'footer' });
+
+    const footer = createTag('div', { slot: 'footer' });
+    if (ctas && ctas.querySelector('a')) {
       decorateButtons(ctas);
       footer.append(ctas);
-      merchCard.appendChild(footer);
     }
+    merchCard.appendChild(footer);
+
     if (image !== undefined) {
       merchCard.setAttribute('image', image.querySelector('img').src);
       image.remove();
@@ -179,7 +184,13 @@ const init = (el) => {
         merchCard.setAttribute('checkbox-label', label);
       }
     }
-    parseContent(el, altCta, cardType, merchCard);
+    parseContent(el, merchCard);
+    if (offerSelection) {
+      import('./offer-selection.js')
+        .then((module) => {
+          module.initOfferSelection(el, merchCard, offerSelection);
+        });
+    }
     decorateBlockHrs(merchCard);
     el.replaceWith(merchCard);
   }
