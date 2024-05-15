@@ -226,7 +226,7 @@ export async function getUpgradeAction(
   imsSignedInPromise,
   [{ productArrangement: { productFamily: offerFamily } = {} }],
 ) {
-  if (options.entitlement === false) return undefined;
+  if (options.upgrade !== true) return undefined;
   const loggedIn = await imsSignedInPromise;
   if (!loggedIn) return undefined;
   const entitlements = await fetchEntitlements();
