@@ -1,7 +1,7 @@
 import { createTag } from './utils.js';
 
 const DEFAULT_BADGE_COLOR = '#000000';
-const DEFAULT_BADGE_BACKGROUND_COLOR = '#F8D904';
+const DEFAULT_BADGE_BACKGROUND_COLOR = '#04f8ad';
 export async function hydrate(fragmentData, merchCard) {
     const fragment = fragmentData.fields.reduce(
         (acc, { name, multiple, values }) => {
