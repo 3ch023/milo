@@ -38,6 +38,8 @@ See [MAS](mas.html#terminology) to learn more.
 | `data-entitlement`            | `entitlement` flag for client side interpretation                                                                                                                                                                                            | `false`       | `false`  |
 | `data-upgrade`                | `upgrade` flag for client side interpretation                                                                                                                                                                                                | `false`       | `false`  |
 | `data-modal`                  | `modal` flag for client side interpretation                                                                                                                                                                                                  | `false`       | `false`  |
+| `data-analytics-id`           | human-readable, non-translatable link id for analytics. Authored in Studio in Link Editor.                                                                                                                                                                                                  | `false`       | `false`  |
+| `daa-ll`                      | martech-compatible link id for analytics. Format: '${data-analytics-id}-${#}', where # is the position of the link within a card. E.g. : see-terms-1,  buy-now-2                                                                                                                                                                  | `false`       | `false`  |
 
 ### Examples {#examples}
 

@@ -98,6 +98,7 @@ CCD Gallery provides a comprehensive list of all supported card variants in CCD.
 | `variant`   | Variant in terms design. Not required when used with an `aem-fragment`                    |                                      | `false`  |
 | `consonant` | Whether to use consonant styles without sp-button decorator around the footer CTAs.       | `true` if `aem-fragment` is not used | `false`  |
 | `size`      | card width; a card can span over 2 columns or entire row on a css grid `wide\|super-wide` |                                      | `false`  |
+| `daa-lh`      | Analytics identifier of a card. Value is coming from the 'PRODUCT_CODE' tag set on the card (for now manual authoring required, later will be tagged automatically). Sample values: 'ccsn' or 'phlt'. |                                      | `false`  |
 
 #### Active variants:
 
