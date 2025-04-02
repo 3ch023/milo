@@ -326,15 +326,18 @@ function createSpectrumSwcButton(cta, aemFragmentMapping, isOutline, variant) {
     return spectrumCta;
 }
 
-function createConsonantButton(cta, isAccent) {
+function createConsonantButton(ctaS, isAccent) {
+    const CheckoutLink = customElements.get('checkout-link');
+    const cta = CheckoutLink.createCheckoutLink(ctaS.dataset);
     cta.classList.add('con-button');
+    cta.setAttribute('is', "checkout-link");
     if (isAccent) {
         cta.classList.add('blue');
     }
     return cta;
 }
 
-export function processCTAs(fields, merchCard, aemFragmentMapping, variant) {
+export function processCTAs(fields, merchCard, aemFragmentMapping) {
     if (fields.ctas) {
         const { slot } = aemFragmentMapping.ctas;
         const footer = createTag('div', { slot }, fields.ctas);
@@ -477,7 +480,7 @@ export async function hydrate(fragment, merchCard) {
     processDescription(fields, merchCard, aemFragmentMapping);
     processStockOffersAndSecureLabel(fields, merchCard, aemFragmentMapping, settings);
     processUptLinks(fields, merchCard);
-    processCTAs(fields, merchCard, aemFragmentMapping, variant);
+    processCTAs(fields, merchCard, aemFragmentMapping);
     processAnalytics(fields, merchCard);
     updateLinksCSS(merchCard);
 }
