@@ -328,9 +328,11 @@ function createSpectrumSwcButton(cta, aemFragmentMapping, isOutline, variant) {
 
 function createConsonantButton(ctaS, isAccent) {
     const CheckoutLink = customElements.get('checkout-link');
-    const cta = CheckoutLink.createCheckoutLink(ctaS.dataset);
+    const cta = CheckoutLink.createCheckoutLink(ctaS.dataset, ctaS.innerHTML);
+    // if (cta.dataset.analyticsId) {
+    //   checkoutButton.setAttribute('data-analytics-id', cta.dataset.analyticsId);
+    // }
     cta.classList.add('con-button');
-    cta.setAttribute('is', "checkout-link");
     if (isAccent) {
         cta.classList.add('blue');
     }

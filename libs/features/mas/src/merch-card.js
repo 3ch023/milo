@@ -406,7 +406,9 @@ export class MerchCard extends LitElement {
         );
         const successPromise = Promise.all(
             masElements.map((element) =>
-                element.onceSettled().catch(() => element),
+                element.onceSettled().catch((e) => {
+                  console.log(e);
+                  return element}),
             ),
         ).then((elements) =>
             elements.every((el) =>
